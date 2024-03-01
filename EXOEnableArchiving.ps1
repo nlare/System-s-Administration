@@ -1,13 +1,12 @@
 ﻿<# This script enables archiving for users who have reached > <setamount> on their mailbox, in order to clear up space and maintain retention policy.
-you simply need to set your threshold for archiving to kick off.#>
+you simply need to set your threshold for archiving to kick off, and the name of the retention policy you want to use.#>
 
-
+$rp = '<Insert Name of Retention Policy>'
+$mbthreshold = '<Insert threshold in which you want archiving to be enabled when reached>'
 Import-Module ExchangeOnlineManagement
-# Connect to EXO
-Connect-ExchangeOnline -ManagedIdentity -Organization brasfieldgorrie.com
 
-#threshold (in gb) in which you want archiving to be enabled.
-$mbthreshold = '<insert threshold in which you want archiving to be enabled when reached>'
+# Connect to EXO with managed identity
+Connect-ExchangeOnline -ManagedIdentity -Organization <insert organization domain>
 
 # Retrieve all mailboxes and gather current mailbox size
 $mbabove89 = ForEach ($mailbox in (Get-EXOMailbox)) {
@@ -24,9 +23,8 @@ $mbtoenablearchive = $mbabove89 | Select-Object Name, @{Name="TotalItemSize";Exp
 # Enabling archive and setting retention policy
 ForEach ($mb in $mbtoenablearchive) {
     Enable-Mailbox -Identity $mb.Name -Archive
-    Set-Mailbox -Identity $mb.Name -RetentionPolicy "Office 365 3 Year Retention Policy"
+    Set-Mailbox -Identity $mb.Name -RetentionPolicy $rp
 }
-
 
 # Writing to screen for logging purposes
 $mbtoenablearchive | Write-Output
