@@ -2,9 +2,9 @@
 you simply need to set your threshold for archiving to kick off, the name of the retention policy you want to use, and organzation domain.#>
 
 Import-Module ExchangeOnlineManagement
-$rp = ''
-$mbthreshold = ''
-$orgDomain = ''
+$rp = '' # Retention Policy Name
+$mbthreshold = '' # Mailbox threshold
+$orgDomain = '' # Organization Domain
 
 # Connect to EXO with managed identity
 Connect-ExchangeOnline -ManagedIdentity -Organization $orgDomain
