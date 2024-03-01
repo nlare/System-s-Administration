@@ -7,7 +7,7 @@ Import-Module ExchangeOnlineManagement
 Connect-ExchangeOnline -ManagedIdentity -Organization brasfieldgorrie.com
 
 #threshold (in gb) in which you want archiving to be enabled.
-$mbthreshold = '<insert threshold in which you want archiving to be enabled when reached'
+$mbthreshold = '<insert threshold in which you want archiving to be enabled when reached>'
 
 # Retrieve all mailboxes and gather current mailbox size
 $mbabove89 = ForEach ($mailbox in (Get-EXOMailbox)) {
